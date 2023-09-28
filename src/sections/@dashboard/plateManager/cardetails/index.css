@@ -1,0 +1,15 @@
+.status-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FFD700;
+    /* Yellow background for the banner */
+    padding: 10px;
+}
+
+.status-text {
+    font-weight: bold;
+    color: #FFFFFF;
+    /* White text color */
+    margin-right: 10px;
+}

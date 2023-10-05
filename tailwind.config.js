@@ -5,5 +5,13 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  variants: {
+    extend: {
+      // Enable responsive variants
+      padding: ['responsive'],
+      margin: ['responsive'],
+      // Add more variants as needed
+    },
+  },
 }
 

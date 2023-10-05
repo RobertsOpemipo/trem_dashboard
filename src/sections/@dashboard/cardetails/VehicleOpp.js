@@ -1,12 +1,13 @@
-/* eslint-disable react/button-has-type */
 import { createColumnHelper, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, useReactTable } from "@tanstack/react-table";
 import { useState } from "react";
 // import React from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { USERS } from "./data";
 import DownloadBtn from "./DownloadBtn";
 import  DebouncedInput  from "./DebouncedInput";
 import { SearchIcon } from "./Icons/Icons";
+
 
 
 
@@ -108,47 +109,44 @@ const VehicleOpp = () => {
             </div>
             
             <div className="overflow-x-auto">
-                <table className="border border-gray-800 w-full text-left">
+                <table className="border border-gray-800 w-full table-auto min-w-[100%] sm:min-w-0 text-left">
                     <thead className="bg-white text-gray-900">
-                        {
-                            table.getHeaderGroups().map((headerGroup)=>(
-                                <tr key={headerGroup.id}>
-                                    {
-                                        headerGroup.headers.map(header=>(
-                                            <th key={header.id} className="capitalize px-3.5 py-2">
-                                                {
-                                                    flexRender(
-                                                        header.column.columnDef.header,
-                                                        header.getContext()
-                                                        )
-                                                }
-                                            </th>
-                                        ))
-                                    }
-                                </tr>
-                            ))
-                        }
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <tr key={headerGroup.id}>
+                            {headerGroup.headers.map((header) => (
+                                <th key={header.id} className="capitalize px-3.5 py-2">
+                                {/* Use a div with whitespace-nowrap class */}
+                                <div className="whitespace-nowrap">
+                                    {flexRender(header.column.columnDef.header, header.getContext())}
+                                </div>
+                                </th>
+                            ))}
+                            </tr>
+                        ))}
                     </thead>
 
                     <tbody className="text-gray-900">
-                        {table.getRowModel().rows.length 
-                        ? (table.getRowModel().rows.map((row,i) => (
-                                    <tr key={row.id} className={`
-                                        ${i % 2 === 0 ? "bg-gray-200": "bg-gray-100"}
-                                    `}>
-                                        {row.getVisibleCells().map((cell) =>(
-                                            <td key={cell.id} className="px-3.5 py-2 sm:px-2 sm:py-1 md:px-3 md:py-2 lg:px-4 lg:py-3">
-                                                {
-                                                    flexRender(
-                                                        cell.column.columnDef.cell,
-                                                        cell.getContext()
-                                                    )}
-                                            </td>
-                                        ))}
-                                    </tr>
-                                ))
-                            ) : null                    
-                        }
+                        {table.getRowModel().rows.length ? (
+                        table.getRowModel().rows.map((row, i) => (
+                            // Wrap each row in a Link component
+                            <Link
+                                key={row.id}
+                                to={`/detail/${row.original.vehicleId}`} // Include the vehicleId parameter
+                                className={`
+                                    ${i % 2 === 0 ? "bg-gray-200" : "bg-gray-100"}
+                                `}
+                                >
+                                {row.getVisibleCells().map((cell) => (
+                                    <td
+                                    key={cell.id}
+                                    className="px-3.5 py-2 sm:px-2 sm:py-1 md:px-3 md:py-2 lg:px-4 lg:py-3"
+                                    >
+                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                    </td>
+                                ))}
+                            </Link>
+                        ))
+                        ) : null}
                     </tbody>
                     {/* <tbody>
                         {table.getRowModel().rows

@@ -1,8 +1,8 @@
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom'; // Import Link component
+import { Link } from 'react-router-dom';
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
-import { useState } from 'react';
 // @mui
 import {
   Card,
@@ -119,6 +119,7 @@ export default function UserPage() {
       newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
     }
     setSelected(newSelected);
+    console.log('Clicked user ID:', name);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -152,9 +153,11 @@ export default function UserPage() {
           <Typography variant="h4" gutterBottom>
             User
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New User
-          </Button>
+          <Link to="/dashboard/new-user" style={{ textDecoration: 'none' }}>
+            <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+              New User
+            </Button>
+          </Link>
         </Stack>
 
         <Card>
@@ -196,15 +199,11 @@ export default function UserPage() {
                         </TableCell>
 
                         <TableCell align="left">{company}</TableCell>
-
                         <TableCell align="left">{role}</TableCell>
-
                         <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
-
                         <TableCell align="left">
                           <Label color={(status === 'banned' && 'error') || 'success'}>{sentenceCase(status)}</Label>
                         </TableCell>
-
                         <TableCell align="right">
                           <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
                             <Iconify icon={'eva:more-vertical-fill'} />
@@ -287,6 +286,14 @@ export default function UserPage() {
           Delete
         </MenuItem>
       </Popover>
+
+      {/* Add a button to go to the user detail page */}
+      <Link to="/dashboard/userdetail" style={{ textDecoration: 'none' }}>
+        <Button variant="contained" startIcon={<Iconify icon="eva:arrow-forward-fill" />}>
+          User Detail
+        </Button>
+      </Link>
+
     </>
   );
 }
